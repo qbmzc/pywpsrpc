@@ -1,5 +1,7 @@
 # 容器中使用wps转pdf 
 
+EULA
+xdg-utils
 ---
 说明：本方案使用的wps带有桌面环境，需要在桌面环境下使用，也就是你的应用程序需要运行在桌面环境 而不是命令行下
 
@@ -63,6 +65,8 @@ fc-cache -vf
 apt update
 # python3-lxml libxslt.so.1
 apt install python3 python3-pip python3-lxml
+apt install python3-lxml
+
 # 安装pywpsrpc
 pip install pywpsrpc -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
