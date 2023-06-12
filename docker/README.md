@@ -5,7 +5,7 @@
 
 否则会出现`Can't get the application`错误
 
-也可以使用服务器版本的，方法类似，这里不做说明
+也可以使用服务器版本的，[RUN ON SERVER](README_SERVER.md)
 
 ## [镜像地址](https://hub.docker.com/repository/docker/congco/wps-office)
 
@@ -79,48 +79,23 @@ pip install pywpsrpc -i https://pypi.tuna.tsinghua.edu.cn/simple
 python convert.py -f pdf input.docx
 ```
 
-## 问题
-
-1. 转换卡顿问题或超时
-
-本地部署一般为局域网访问，不开通外网，wps有外网连接请求，在没网的环境下会导致转换过慢，甚至会导致转换超时失败。
-```shell
-# 可使用tcpdump抓包分析
-
-tcpdump -i eth0 -nt -s 500 port domain
-```
-解决方案
-
-- 将resolv.conf中的DNS解析服务器设置为空
-- docker中可以挂载一个空文件映射到/etc/resolv.conf
-- /etc/hosts 添加以下内容(由于有些部署方式会替换容器host，这里没有在容器内修改，可以在配置中添加主机别名)
-```shell
-127.0.0.1 s1.vip.wpscdn.cn
-127.0.0.1 dw-online.ksosoft.com
-```
-
-
-2. libQt5Core.so.5: cannot open shared object file
-
-```bash
- apt-get install libqt5core5a
- strip --remove-section=.note.ABI-tag /lib/x86_64-linux-gnu/libQt5Core.so.5
-```
-
-3. ImportError: /usr/lib/office6/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by /usr/lib/libQt5Core.so.5)
-
-```shell
-sudo rm /usr/lib/office6/libstdc++.so.6 
-sudo ln -s /usr/lib64/libstdc++.so.6 /usr/lib/office6/libstdc++.so.6
-```
-
-## openjdk8
+## jdk8环境
 
 根据需要安装相关应用依赖
 
-```shell
-apt-get update
-apt-get install openjdk-8-jdk
+```dockerfile
+FROM images.taimei.com/middle/wps-office:v2.0.0
+COPY win /usr/share/fonts/win/
+# 中文支持
+ENV LANG C.UTF-8
+# 自行下载jdk
+ADD zulu8.70.0.23-ca-jdk8.0.372-linux_x64.tar.gz /opt/
+
+ENV JAVA_HOME /opt/zulu8.70.0.23-ca-jdk8.0.372-linux_x64
+ENV PATH $PATH:$JAVA_HOME/bin
+# 安装其他依赖
+RUN apt-get -y update&& apt-get install curl -y \
+     && apt-get -y autoclean; rm -rf /var/lib/apt/lists/*
 ```
 
 ## docker打包
@@ -186,4 +161,5 @@ services:
 - [docker commit](https://www.runoob.com/docker/docker-commit-command.html)
 - [用docker创建ubuntu VNC桌面](https://blog.csdn.net/arag2009/article/details/78465214)
 - [wps](https://open.wps.cn/docs/client/wpsLoad)
+
 
