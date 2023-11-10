@@ -132,9 +132,12 @@ export DISPLAY=:0
 ## EULA
 
 ```shell
- vim /root/.config/Kingsoft/Office.conf
+vim /root/.config/Kingsoft/Office.conf
 # 末尾添加
 common\AcceptedEULA=true
+
+#或者
+echo "common\AcceptedEULA=true" >> /root/.config/Kingsoft/Office.conf
 ```
 
 ## 转换pdf
@@ -221,7 +224,5 @@ echo "start X server"
 nohup X :0 -config /etc/dummy.conf > /dev/null 2>&1 &
 echo "X server start successful!"
 echo "start java server"
-#python3 /opt/convert.py a.md -f pdf
-# CMD ["sh", "-c", "java ${APM_SRV_AGENT_OPTIONS} ${JAVA_OPTS} -jar /k8sapps/hls-1.0.0-SNAPSHOT.jar"]
-java ${APM_SRV_AGENT_OPTIONS} ${JAVA_OPTS} -Dqueue=${QUEUE} -jar /k8sapps/new-doc-convert-0.0.1-SNAPSHOT.jar
+java ${JAVA_OPTS}  -jar /k8sapps/new-test-0.0.1-SNAPSHOT.jar
 ```

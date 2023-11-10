@@ -54,7 +54,7 @@ dpkg -i wps-office_11.1.0.10976_amd64.deb
 #拷贝字体到 usr/share/fonts
 cp -r ./wps-font-symbols /usr/share/fonts/
  
- 
+#刷新字体缓存
 fc-cache -vf
 ```
 
@@ -66,6 +66,14 @@ apt install python3 python3-pip python3-lxml
 # 安装pywpsrpc
 pip install pywpsrpc -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+
+### 设置
+
+1. 桌面环境下启动wps,设置成组合模式
+
+![2](./pic/img_1.png)
+
+2. 接受EULA
 
 ### 文档互转
  - [WPS文字](examples/rpcwpsapi/convertto)
@@ -152,8 +160,11 @@ services:
     volumes:
       - /data/02webapps:/data/webapps
        ## 禁止wps在无网络环境下请求DNS解析联网
+      ## resolv.conf空白文件即可
       - /data/resolv.conf:/etc/resolv.conf:ro
 ```
+
+
 
 ## 参考资料
 
