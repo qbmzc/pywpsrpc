@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 Weitian Leung
+ * Copyright (c) 2020-2023 Weitian Leung
  *
  * This file is part of pywpsrpc.
  *
@@ -28,7 +28,10 @@ namespace etapi
 
         virtual HRESULT get_ColumnFields(
             VARIANT Index = argMissing2(),
-            IDispatch **RHS /Out/ = 0) = 0;
+            etapi::IPivotFields **RHS /Out/ = 0) = 0;
+        %MethodCode
+            sipRes = sipCpp->get_ColumnFields(*a0, (IDispatch**)&a1);
+        %End
 
         virtual HRESULT get_ColumnGrand(
             VARIANT_BOOL *RHS /Out/) = 0;
@@ -48,7 +51,10 @@ namespace etapi
 
         virtual HRESULT get_DataFields(
             VARIANT Index = argMissing2(),
-            IDispatch **RHS /Out/ = 0) = 0;
+            etapi::IPivotFields **RHS /Out/ = 0) = 0;
+        %MethodCode
+            sipRes = sipCpp->get_DataFields(*a0, (IDispatch**)&a1);
+        %End
 
         virtual HRESULT get_DataLabelRange(
             Range **RHS /Out/) = 0;
@@ -67,7 +73,10 @@ namespace etapi
 
         virtual HRESULT get_HiddenFields(
             VARIANT Index = argMissing2(),
-            IDispatch **RHS /Out/ = 0) = 0;
+            etapi::IPivotFields **RHS /Out/ = 0) = 0;
+        %MethodCode
+            sipRes = sipCpp->get_HiddenFields(*a0, (IDispatch**)&a1);
+        %End
 
         virtual HRESULT get_InnerDetail(
             BSTR *RHS /Out/) = 0;
@@ -83,7 +92,10 @@ namespace etapi
 
         virtual HRESULT get_PageFields(
             VARIANT Index = argMissing2(),
-            IDispatch **RHS /Out/ = 0) = 0;
+            etapi::IPivotFields **RHS /Out/ = 0) = 0;
+        %MethodCode
+            sipRes = sipCpp->get_PageFields(*a0, (IDispatch**)&a1);
+        %End
 
         virtual HRESULT get_PageRange(
             Range **RHS /Out/) = 0;
@@ -93,7 +105,10 @@ namespace etapi
 
         virtual HRESULT PivotFields(
             VARIANT Index = argMissing2(),
-            IDispatch **RHS /Out/ = 0) = 0;
+            IPivotFields **RHS /Out/ = 0) = 0;
+        %MethodCode
+            sipRes = sipCpp->PivotFields(*a0, (IDispatch**)&a1);
+        %End
 
         virtual HRESULT get_RefreshDate(
             DATE *RHS /Out/) = 0;
@@ -106,7 +121,10 @@ namespace etapi
 
         virtual HRESULT get_RowFields(
             VARIANT Index = argMissing2(),
-            IDispatch **RHS /Out/ = 0) = 0;
+            etapi::IPivotFields **RHS /Out/ = 0) = 0;
+        %MethodCode
+            sipRes = sipCpp->get_RowFields(*a0, (IDispatch**)&a1);
+        %End
 
         virtual HRESULT get_RowGrand(
             VARIANT_BOOL *RHS /Out/) = 0;
@@ -143,7 +161,10 @@ namespace etapi
 
         virtual HRESULT get_VisibleFields(
             VARIANT Index = argMissing2(),
-            IDispatch **RHS /Out/ = 0) = 0;
+            etapi::IPivotFields **RHS /Out/ = 0) = 0;
+        %MethodCode
+            sipRes = sipCpp->get_VisibleFields(*a0, (IDispatch**)&a1);
+        %End
 
         virtual HRESULT get_CacheIndex(
             long *RHS /Out/) = 0;
@@ -443,7 +464,7 @@ namespace etapi
             for (const auto &index : indexes)
                 sipReleaseType(args[index.first], sipType_VARIANT, index.second);
 
-            return sipBuildResult(0, "(iD)", hr, prop, sipType_etapi_Range, SIP_NULLPTR);
+            return sipBuildResult(0, "(iD)", hr, prop, sipType_etapi_IRange, SIP_NULLPTR);
         %End
 
         virtual HRESULT get_DataPivotField(
